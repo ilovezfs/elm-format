@@ -23,3 +23,23 @@ none_withComments model =
     ( model {- A -}
     , {- B -} Cmd.none {- C -}
     )
+
+
+inBinaryExpression model x a b =
+    x
+        + ( model
+          , Cmd.batch [ a ]
+          )
+        << [ b ]
+
+
+followingHighPrecedenceOperators f g =
+    ( f >> g
+    , Cmd.none
+    )
+
+
+followingFunctionApplication f x =
+    ( f x
+    , Cmd.none
+    )

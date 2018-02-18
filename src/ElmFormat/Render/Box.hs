@@ -1463,7 +1463,18 @@ removeBangs left ops =
                     , rest
                     )
 
-        _ -> (left, ops)
+        (pre, AST.Variable.OpRef (AST.SymbolIdentifier ">>"), post, e):rest ->
+
+
+
+        (pre, op, post, e):rest ->
+            let
+                (e', rest') = removeBangs e rest
+            in
+                (left, (pre, op, post, e'):rest')
+
+        [] ->
+            (left, ops)
 
 
 formatRange_0_17 :: ElmVersion -> AST.Commented AST.Expression.Expr -> AST.Commented AST.Expression.Expr -> Bool -> Box
